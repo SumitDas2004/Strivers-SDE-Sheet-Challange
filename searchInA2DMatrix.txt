@@ -1,0 +1,15 @@
+import java.util.ArrayList;
+
+public class Solution {
+    static boolean searchMatrix(ArrayList<ArrayList<Integer>> mat, int target) {
+        // Write your code here.
+        int m=mat.size();
+        int n=mat.get(0).size();
+        int i=0;
+        int j=n-1;
+        while(i<m && mat.get(i).get(j)<target)i++;
+        if(i>=m)return false;
+        for(int k:mat.get(i))if(k==target)return true;
+        return false;
+    }
+}

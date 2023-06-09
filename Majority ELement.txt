@@ -1,0 +1,15 @@
+import java.io.*;
+import java.util.* ;
+
+public class Solution {
+	public static int findMajority(int[] arr, int n) {
+		// Write your code here.
+		int tar=(int)Math.floor(n/2);
+		HashMap<Integer, Integer> map=new HashMap<>();
+		for(int i:arr)map.put(i, map.getOrDefault(i, 0)+1);
+		for(int i:map.keySet()){
+			if(map.get(i)>tar)return i;
+		}
+		return -1;
+	}
+}
