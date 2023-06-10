@@ -1,0 +1,32 @@
+import java.util.* ;
+
+import java.io.*; 
+public class Solution {
+
+	public static ArrayList<ArrayList<Integer>> findTriplets(int[] arr, int n, int K)  {
+
+	    // Write your code here.
+		Arrays.sort(arr);
+		ArrayList<ArrayList<Integer>> ans=new ArrayList<>();
+		for(int i=0;i<n-3;i++){
+			int l=i+1;
+			int r=n-1;
+			while(l<r){
+				if(arr[i]+arr[l]+arr[r]==K){
+					ArrayList<Integer> list=new ArrayList<>();
+					list.add(arr[i]);
+					list.add(arr[l]);
+					list.add(arr[r]);
+					ans.add(list);
+					l++;
+					r--;
+					while(l<r && arr[l]==arr[l-1])l++;
+					while(r>l && arr[r]==arr[r+1])r--;
+				}else if(arr[i]+arr[l]+arr[r]<K)l++;
+				else if(arr[i]+arr[l]+arr[r]>K)r--;
+			}
+			while(i<n-1 && arr[i]==arr[i+1])i++;
+		}
+		return ans;
+	}
+}
