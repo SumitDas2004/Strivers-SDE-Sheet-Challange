@@ -1,0 +1,51 @@
+
+public class Solution {
+    static Node reverse(Node head){
+        Node cur=head;
+        Node next=null;
+        Node prev=null;
+        while(cur!=null){
+            next=cur.next;
+            cur.next=prev;
+            prev=cur;
+            cur=next;
+        }
+        return prev;
+    }
+    static int length(Node node){
+        int len=0;
+        while(node!=null){
+            len++;
+            node=node.next;
+        }
+        return len;
+    }
+    static void concat(Node first, Node second){
+        Node cur=first;
+        while(cur.next!=null){
+            cur=cur.next;
+        }
+        cur.next=second;
+    }
+    public static Node rotate(Node head, int k) {
+        // Write your code here.
+        int len=length(head);
+        if(k>=len)
+        k=k%len;
+        if(k==0)return head;
+        int cnt=1;
+        Node first=head;
+        Node second=null;
+        Node cur=first;
+        while(len-cnt!=k){
+            cur=cur.next;
+            cnt++;
+        }
+        second=cur.next;
+        cur.next=null;
+        first=reverse(first);
+        second=reverse(second);
+        concat(first, second);
+        return reverse(first);
+    }
+}
