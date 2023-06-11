@@ -1,0 +1,26 @@
+import java.util.* ;
+import java.io.*; 
+class cmp implements Comparator<int[]>{
+    public int compare(int a[], int b[]){
+        return Integer.compare(b[1], a[1]);
+    }
+}
+public class Solution
+{
+
+    public static int jobScheduling(int[][] jobs)
+    {
+        // Write your code here
+        int profit=0;
+        Arrays.sort(jobs, new cmp());
+        boolean dp[]=new boolean[jobs.length+1];
+        for(int i=0;i<jobs.length;i++){
+            int j=Math.min(jobs.length, jobs[i][0]);
+            while(j>0 && dp[j])j--;
+            if(j==0)continue;
+            dp[j]=true;
+            profit+=jobs[i][1];
+        }
+        return profit;
+    }
+}

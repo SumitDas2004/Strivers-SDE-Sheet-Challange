@@ -1,0 +1,26 @@
+
+public class Solution
+{
+    static int length(Node cur){
+        int cnt=0;
+        while(cur!=null){
+            cur=cur.next;
+            cnt++;
+        }
+        return cnt;
+    }
+    public static Node removeKthNode(Node head, int K)
+    {
+        // Write your code here.
+        int len=length(head);
+        if(len==K)return head.next;
+        Node cur=head;
+        int cnt=1;
+        while(len-cnt!=K){
+            cnt++;
+            cur=cur.next;
+        }
+        cur.next=cur.next.next;
+        return head;
+    }
+}

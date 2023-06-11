@@ -1,0 +1,28 @@
+public class Solution {
+	public static LinkedListNode<Integer> sortTwoLists(LinkedListNode<Integer> first, LinkedListNode<Integer> second) {
+		// Write your code here.
+        LinkedListNode<Integer> head=new LinkedListNode<>(0);
+        LinkedListNode<Integer> cur=head;
+        while(first!=null && second!=null){
+            if(first.data<second.data){
+                cur.next=new LinkedListNode<Integer>(first.data);
+                first=first.next;
+            }else{
+                cur.next=new LinkedListNode<Integer>(second.data);
+                second=second.next;
+            }
+            cur=cur.next;
+        }
+        while(first!=null){
+            cur.next=new LinkedListNode<Integer>(first.data);
+            first=first.next;
+            cur=cur.next;
+        }
+        while(second!=null){
+            cur.next=new LinkedListNode<Integer>(second.data);
+            second=second.next;
+            cur=cur.next;
+        }
+        return head.next;
+	}
+}
