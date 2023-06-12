@@ -1,0 +1,32 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    static boolean isPalindrome(String s){
+        int l=0;
+        int r=s.length()-1;
+        while(l<r){
+            if(s.charAt(l)!=s.charAt(r))return false;
+            l++;
+            r--;
+        }
+        return true;
+    }
+    static void solve(ArrayList<String> list, String s, List<List<String>> ans){
+        if(s.length()==0){
+            ans.add(list);
+        }
+        for(int i=1;i<=s.length();i++){
+            if(!isPalindrome(s.substring(0, i)))
+            continue;
+            list.add(s.substring(0, i));
+            solve(new ArrayList<>(list), s.substring(i), ans);
+            list.remove(list.size()-1);  
+        }
+    }
+    public static List<List<String>> partition(String s) {
+        // Write your code here.
+        List<List<String>> ans=new ArrayList<>();
+        solve(new ArrayList<>(), s, ans);
+        return ans;
+    }
+}
