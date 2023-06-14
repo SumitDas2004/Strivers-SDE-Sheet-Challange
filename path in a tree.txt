@@ -1,0 +1,39 @@
+import java.util.* ;
+import java.io.*; 
+/*   
+    Following is the Binary Tree node structure for referance:
+
+    class TreeNode
+    {
+        int data;
+        TreeNode left, right;
+    
+        public TreeNode(int item)
+        {
+            data = item;
+            left = right = null;
+        }
+    }
+*/
+
+public class Solution {
+    static boolean solve(TreeNode root, int x, ArrayList<Integer> ans){
+        if(root==null)return false;
+        if(root.data==x){
+            ans.add(root.data);
+            return true;
+        }
+        if(solve(root.left, x, ans) || solve(root.right, x, ans)){
+            ans.add(root.data);
+            return true;
+        }
+        return false;
+    }
+    public static ArrayList<Integer> pathInATree(TreeNode root, int x) {
+        // Write your code here..
+        ArrayList<Integer> ans=new ArrayList<>();
+        solve(root, x, ans);
+        Collections.reverse(ans);
+        return ans;
+    }
+}

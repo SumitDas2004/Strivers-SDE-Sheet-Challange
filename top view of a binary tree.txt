@@ -1,0 +1,55 @@
+
+import java.util.*;
+import java.io.*; 
+/************************************************************
+
+    Following is the TreeNode class structure:
+
+    class BinaryTreeNode {
+		int val;
+		BinaryTreeNode left;
+		BinaryTreeNode right;
+
+		BinaryTreeNode(int val) {
+			this.val = val;
+			this.left = null;
+			this.right = null;
+		}
+	}
+
+************************************************************/
+class pair{
+	BinaryTreeNode node;
+	int ind;
+	pair(int i, BinaryTreeNode root){
+		this.ind=i;
+		this.node=root;
+	}
+}
+public class Solution {
+	public static ArrayList<Integer> getTopView(BinaryTreeNode root) {
+		// Write your code here.
+		if(root==null)return new ArrayList<>();
+		HashMap<Integer, ArrayList<Integer>> map=new HashMap<>();
+		ArrayList<Integer> ans=new ArrayList<>();
+		int minInd=0;
+		Queue<pair> q=new LinkedList<>();
+		q.add(new pair(0, root));
+		while(!q.isEmpty()){
+			pair cur=q.poll();
+			BinaryTreeNode node=cur.node;
+			int ind=cur.ind;
+			minInd=Math.min(minInd, ind);
+			ArrayList<Integer> tmp=map.getOrDefault(ind, new ArrayList<>());
+			map.put(ind, tmp);
+			if(node!=null)tmp.add(node.val);
+			if(node.left!=null)q.add(new pair(ind-1, node.left));
+			if(node.right!=null)q.add(new pair(ind+1, node.right));
+		}
+		while(map.containsKey(minInd)){
+			ans.add(map.get(minInd).get(0));
+			minInd++;
+		}
+		return ans;
+	}
+}
