@@ -1,0 +1,16 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static int distinctSubstring(String word) {
+        // Write your code here.Hash
+        HashSet<String> set=new HashSet<>();
+        for(int i=0;i<word.length();i++){
+            String cur="";
+            for(int j=i;j<word.length();j++){
+                cur+=word.charAt(j);
+                set.add(cur);
+            }
+        }
+        return set.size();
+    }
+}
