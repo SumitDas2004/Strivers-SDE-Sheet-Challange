@@ -1,0 +1,23 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+public class Solution {
+	static int solve(ArrayList<Integer> values, ArrayList<Integer> weights, int i, int w, int n, int dp[][]){
+		if(i==n){
+			if(w>=0)
+			return 0;
+			return Integer.MIN_VALUE;
+		}
+		if(dp[i][w]!=-1)return dp[i][w];
+		int pick=0;
+		if(w-weights.get(i)>=0)
+		pick=values.get(i)+solve(values, weights, i+1, w-weights.get(i), n, dp);
+		int notPick=solve(values, weights, i+1, w, n, dp);
+		return dp[i][w]=Math.max(pick, notPick);
+	}
+	public static int maxProfit(ArrayList<Integer> values, ArrayList<Integer> weights, int n, int w) {
+		// Write your code here.
+		int dp[][]=new int[n][w+1];
+		for(int i[]:dp)Arrays.fill(i, -1);
+		return solve(values, weights, 0, w, n, dp);
+	}
+}

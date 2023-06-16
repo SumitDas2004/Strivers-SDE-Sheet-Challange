@@ -1,0 +1,58 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution 
+{
+    public static ArrayList<ArrayList<Integer>> calculatePrimsMST(int n, int m, ArrayList<ArrayList<Integer>> g)
+    {
+        // Write your code here.
+        ArrayList<ArrayList<int[]>> adj=new ArrayList<>();
+        for(int i=0;i<n;i++)adj.add(new ArrayList<>());
+        for(ArrayList<Integer> list:g){
+            int u=list.get(0)-1;
+            int v=list.get(1)-1;
+            int w=list.get(2);
+            adj.get(u).add(new int[]{v, w});
+            adj.get(v).add(new int[]{u, w});
+        }
+        boolean visited[]=new boolean[n];
+        int ans[]=new int[n];
+        Arrays.fill(ans, Integer.MAX_VALUE);
+        ans[0]=0;
+        for(int e=0;e<n;e++){
+            int minv=-1;
+            int minw=-1;
+            for(int i=0;i<n;i++){
+                if(visited[i])continue;
+                if(minv==-1 || minw>ans[i]){
+                    minv=i;
+                    minw=ans[i];
+                }
+            }
+            if(minv==-1)break;
+                visited[minv]=true;
+                for(int i[]:adj.get(minv)){
+                    if(!visited[i[0]])
+                    ans[i[0]]=Math.min(ans[i[0]], i[1]);
+                }
+        }
+        ArrayList<ArrayList<Integer>> list=new ArrayList<>();
+        for(int i=1;i<n;i++){
+            for(int e[]:adj.get(i)){
+                if(e[1]==ans[i]){
+                    int u=i;
+                    int v=e[0];
+                    int w=e[1];
+                    ArrayList<Integer> tmp=new ArrayList<>();
+                    tmp.add(u+1);
+                    tmp.add(v+1);
+                    tmp.add(w);
+                    list.add(tmp);
+                    break;
+                }
+            }
+        }
+        return list;
+    }
+}

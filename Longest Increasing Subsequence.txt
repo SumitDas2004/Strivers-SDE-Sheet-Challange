@@ -1,0 +1,15 @@
+import java.util.TreeSet;
+public class Solution {
+
+	public static int longestIncreasingSubsequence(int arr[]) {
+		//Your code goes here
+		TreeSet<Integer> set=new TreeSet<>();
+        for(int i:arr){
+            Integer e=set.ceiling(i);
+            if(e!=null)set.remove(e);
+            set.add(i);
+        }
+        return set.size();
+	}
+
+}

@@ -1,0 +1,46 @@
+import java.util.* ;
+import java.io.*;
+class cmp implements Comparator<int[]> {
+	public int compare(int[] a, int b[]){
+		return Integer.compare(a[1], b[1]);
+	}
+} 
+public class Solution {
+	
+	public static ArrayList < Integer > dijkstra(ArrayList< ArrayList < Integer > > vec, int vertices, int edges, int source){
+		// Write your code here.
+		ArrayList<ArrayList<int[]>> adj=new ArrayList<>();
+		for(int i=0;i<vertices;i++)adj.add(new ArrayList<>());
+		for(ArrayList<Integer> list:vec){
+			int u=list.get(0);
+			int v=list.get(1);
+			int w=list.get(2);
+			adj.get(u).add(new int[]{v, w});
+			adj.get(v).add(new int[]{u, w});
+		}
+		PriorityQueue<int[]> pq=new PriorityQueue<>(new cmp());
+		int ans[]=new int[vertices];
+		boolean visited[]=new boolean[vertices];
+		Arrays.fill(ans, Integer.MAX_VALUE);
+		pq.add(new int[]{0, 0});
+		ans[0]=0;
+		while(!pq.isEmpty()){
+			int[] cur=pq.poll();
+			int u=cur[0];
+			int w=cur[1];
+			visited[u]=true;
+			for(int[] i:adj.get(u)){
+				int v=i[0];
+				int nextw=i[1];
+				if(visited[v])continue;
+				if(w+nextw<ans[v]){
+					ans[v]=w+nextw;
+					pq.add(new int[]{v, w+nextw});
+				}
+			}
+		}
+		ArrayList<Integer> list=new ArrayList<>();
+		for(int i:ans)list.add(i);
+		return list;
+	}
+}
