@@ -1,0 +1,48 @@
+import java.util.* ;
+import java.io.*; 
+/***************************************************************************
+
+  Class for graph node is as follows:
+
+  class graphNode {
+      public int data;
+      public ArrayList<graphNode> neighbours;
+
+      graphNode() {
+          data = 0;
+          neighbours = new ArrayList<graphNode>();
+      }
+
+      graphNode(int val) {
+          data = val;
+          neighbours = new ArrayList<graphNode>();
+      }
+
+      graphNode(int val, ArrayList<graphNode> neighbours) {
+          data = val;
+          this.neighbours = neighbours;
+      }
+    }
+
+******************************************************************************/
+
+public class Solution {
+    static void dfs(graphNode node, graphNode clone, HashSet<Integer> visited){
+        ArrayList<graphNode> list=clone.neighbours;
+        for(graphNode g:node.neighbours){
+            list.add(new graphNode(g.data));
+        }
+        for(int i=0;i<list.size();i++){
+            if(!visited.contains(list.get(i).data)){
+                visited.add(list.get(i).data);
+                dfs(node.neighbours.get(i), clone.neighbours.get(i), visited);
+            }
+        }
+    }
+    public static graphNode cloneGraph(graphNode node) {
+        // Write your code here.
+        graphNode clone=new graphNode(node.data);
+        dfs(node, clone, new HashSet<>());
+        return clone;
+    }
+}

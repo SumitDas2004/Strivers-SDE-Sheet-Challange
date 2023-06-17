@@ -1,0 +1,19 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    static int solve(String arr[], String target, int dp[]){
+        if(target.length()==0)return 1;
+        if(dp[target.length()]!=-1)return dp[target.length()];
+        for(String s:arr){
+            int i=s.length();
+            if(s.length()<=target.length() && s.equals(target.substring(0, i)) && solve(arr, target.substring(i), dp)==1)return dp[target.length()]=1;
+        }
+        return dp[target.length()]=0;
+    }
+    public static Boolean wordBreak(String[] arr, int n, String target) {
+        // Write your code here.
+        int dp[]=new int[target.length()+1];
+        Arrays.fill(dp, -1);
+        return solve(arr, target, dp)==1?true:false;
+    }
+}

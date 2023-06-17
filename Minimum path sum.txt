@@ -1,0 +1,32 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    // static int solve(int[][] grid, int i, int j, int dp[][]){
+    //     if(i==grid.length-1 && j==grid[0].length-1)return grid[i][j];
+    //     if(i==grid.length || j==grid[0].length)return 10000000;
+    //     if(dp[i][j]!=-1)return dp[i][j];
+    //     int right=solve(grid, i, j+1, dp);
+    //     int down=solve(grid, i+1, j, dp);
+    //     return dp[i][j]=Math.min(right, down)+grid[i][j];
+    // }
+      public static int minSumPath(int[][] grid) {
+    	// Write your code here.
+        int dp[][]=new int[grid.length][grid[0].length];
+        for(int i=grid.length-1;i>=0;i--){
+            for(int j=grid[0].length-1;j>=0;j--){
+                if(i==grid.length-1 && j==grid[0].length-1){
+                    dp[i][j]= grid[i][j];
+                    continue;
+                }
+                int right=10000000;
+                int down=10000000;
+                if(j+1<grid[0].length)
+                right=dp[i][j+1];
+                if(i+1<grid.length)
+                down=dp[i+1][j];
+                dp[i][j]=Math.min(right, down)+grid[i][j];
+            }
+        }
+        return dp[0][0];
+    }
+}
