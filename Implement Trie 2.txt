@@ -1,0 +1,62 @@
+import java.util.* ;
+
+
+import java.io.*; 
+public class Trie {
+    Trie[] children;
+    int isEnd;
+    int cnt;
+    public Trie() {
+        // Write your code here.
+        this.children=new Trie[26];
+        this.isEnd=0;
+        cnt=0;
+    }
+    public void insert(String word) {
+        // Write your code here.
+        Trie cur=this;
+        for(char c:word.toCharArray()){
+            if(cur.children[c-97]==null){
+                cur.children[c-97]=new Trie();
+            }
+            cur=cur.children[c-97];
+            cur.cnt++;
+        }
+        cur.isEnd++;
+    }
+
+    public int countWordsEqualTo(String word) {
+        // Write your code here.
+        Trie cur=this;
+        for(char c:word.toCharArray()){
+            if(cur.children[c-97]==null){
+                return 0;
+            }
+            cur=cur.children[c-97];
+        }
+        return cur.isEnd;
+    }
+
+    public int countWordsStartingWith(String word) {
+        // Write your code here.
+        Trie cur=this;
+        for(char c:word.toCharArray()){
+            if(cur.children[c-97]==null){
+                return 0;
+            }
+            cur=cur.children[c-97];
+        }
+        return cur.cnt;
+    }
+
+    public void erase(String word) {
+        // Write your code here.
+        Trie cur=this;
+        for(char c:word.toCharArray()){
+            cur=cur.children[c-97];
+            cur.cnt--;
+        }
+        cur.isEnd--;
+    }
+
+}

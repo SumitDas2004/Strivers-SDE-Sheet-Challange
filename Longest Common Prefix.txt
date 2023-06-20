@@ -1,0 +1,62 @@
+
+//Trie Solution is not workning in java
+
+
+
+
+
+
+import java.util.Arrays;
+// class TrieNode{
+// 	TrieNode[] children;
+// 	boolean isEnd;
+// 	int cnt;
+// 	TrieNode(){
+// 		children=new TrieNode[26];
+// 		Arrays.fill(children, null);
+// 		this.isEnd=false;
+// 		this.cnt=0;
+// 	}
+// }
+public class Solution {
+// 	static TrieNode trie=new TrieNode();
+// 	static void add(String word){
+// 		TrieNode cur=trie;
+// 		for(char c:word.toCharArray()){
+// 			if(cur.children[c-97]==null)
+// 			cur.children[c-97]=new TrieNode();
+// 			cur=cur.children[c-97];
+// 			cur.cnt++;
+// 		}
+// 		cur.isEnd=true;
+// 	}
+// 	static String search(String word, int n){
+// 		String ans="";
+// 		TrieNode cur=trie;
+// 		for(char c:word.toCharArray()){
+// 			if(cur.children[c-97].cnt!=n)return ans;
+// 			ans+=c;
+// 			cur=cur.children[c-97];
+// 		}
+// 		return ans;
+// 	}
+	public static String longestCommonPrefix(String[] arr, int n) {
+		// Write your code here
+		// trie=new TrieNode();
+		// for(String s:arr)add(s);
+		// return search(arr[0], n);
+
+		Arrays.sort(arr);
+		String tmp1=arr[0];
+		String tmp2=arr[n-1];
+		int i=0;
+		int j=0;
+		while(i<tmp1.length() && j<tmp2.length()){
+			if(tmp1.charAt(i++)!=tmp2.charAt(j++))return tmp1.substring(0, i-1);
+		}
+		return tmp1.substring(0, i);
+	}
+
+}
+
+

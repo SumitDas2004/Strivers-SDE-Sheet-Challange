@@ -1,0 +1,23 @@
+import java.util.* ;
+import java.io.*; 
+public class Kthlargest {
+    PriorityQueue<Integer> pq;
+    Kthlargest(int k, int[] arr) {
+        // Write your code here.
+        pq=new PriorityQueue<>();
+        for(int i:arr)pq.add(i);
+    }
+
+    void add(int num) {
+        // Write your code here.
+        if(pq.peek()<num){
+            pq.poll();
+            pq.add(num);
+        }
+    }
+
+    int getKthLargest() {
+        // Write your code here.
+        return pq.peek();
+    }
+}

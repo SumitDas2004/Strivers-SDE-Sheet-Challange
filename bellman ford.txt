@@ -1,0 +1,30 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    static int bellmonFord(int n, int m, int src, int dest, ArrayList<ArrayList<Integer>> edges) {
+      // Write your code here.
+      int arr[]=new int[n];
+      Arrays.fill(arr, 1000000000);
+      arr[src-1]=0;
+      while(n-->1){
+        for(ArrayList<Integer> list:edges){
+          int u=list.get(0)-1;
+          int v=list.get(1)-1;
+          int w=list.get(2);
+          if(arr[u]+w<arr[v]){
+            arr[v]=arr[u]+w;
+          }
+        }
+      }
+      for(ArrayList<Integer> list:edges){
+          int u=list.get(0)-1;
+          int v=list.get(1)-1;
+          int w=list.get(2);
+          if(arr[u]+w<arr[v]){
+            return -1;
+          }
+        }
+        return arr[dest-1]>=900000000? 1000000000:arr[dest-1];
+    }
+    
+}

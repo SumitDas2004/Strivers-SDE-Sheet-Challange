@@ -1,0 +1,20 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+	static void solve(ArrayList<ArrayList<Integer>> list, ArrayList<Integer> tmp, int i, ArrayList<Integer> arr){
+		if(i==arr.size()){
+			list.add(tmp);
+			return;
+		}
+		solve(list, new ArrayList<>(tmp), i+1, arr);
+		tmp.add(arr.get(i));
+		solve(list, new ArrayList<>(tmp), i+1, arr);
+	}
+	public static ArrayList<ArrayList<Integer>> pwset(ArrayList<Integer> arr) {
+		// WRITE YOUR CODE HERE
+		ArrayList<ArrayList<Integer>> list=new ArrayList<>();
+		solve(list, new ArrayList<>(), 0, arr);
+		return list;
+	}
+}
+

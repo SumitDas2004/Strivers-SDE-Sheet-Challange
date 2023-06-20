@@ -1,0 +1,23 @@
+import java.util.* ;
+
+import javax.management.AttributeList;
+
+import java.io.*; 
+public class Solution {
+    static void solve(ArrayList<Integer> list, int num[], int i, int sum){
+        if(i>=num.length){
+            list.add(sum);
+            return ;
+        }
+        solve(list, num, i+1, sum+num[i]);
+        solve(list, num, i+1, sum);
+    }
+    public static ArrayList<Integer> subsetSum(int num[]) {
+        // Write your code here..
+        ArrayList<Integer> list=new ArrayList<>();
+        solve(list, num, 0, 0);
+        Collections.sort(list);
+        return list;
+    }
+
+}
