@@ -1,0 +1,59 @@
+import java.util.Arrays;
+public class Trie {
+
+
+    //Initialize your data structure here
+    Trie[] children;
+	boolean isEnd;
+    Trie() {
+        //Write your code here
+        children=new Trie[26];
+		Arrays.fill(children, null);
+		isEnd=false;
+    }
+
+    static Trie trie=new Trie();
+    //Inserts a word into the trie
+
+    public static void insert(String word) {
+        //Write your code here
+        Trie cur=trie;
+		for(char c:word.toCharArray()){
+			if(cur.children[c-97]==null){
+				cur.children[c-97]=new Trie();
+			}
+			cur=cur.children[c-97];
+		}
+		cur.isEnd=true;
+    }
+
+
+    //Returns if the word is in the trie
+
+    public static boolean search(String word) {
+        //Write your code here
+        Trie cur=trie;
+		for(char c:word.toCharArray()){
+			if(cur.children[c-97]==null){
+				return false;
+			}
+			cur=cur.children[c-97];
+		}
+		return cur.isEnd;
+    }
+
+    
+    //Returns if there is any word in the trie that starts with the given prefix
+
+    public static boolean startsWith(String word) {
+        //Write your code here
+        Trie cur=trie;
+		for(char c:word.toCharArray()){
+			if(cur.children[c-97]==null){
+				return false;
+			}
+			cur=cur.children[c-97];
+		}
+		return true;
+    }
+}

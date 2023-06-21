@@ -1,0 +1,44 @@
+import java.io.*;
+import java.util.* ;
+
+/****************************************************************
+
+    Following is the class structure of the Node class:
+
+        class Node
+        {
+        public:
+	        int data;
+	        Node *next;
+	        Node(int data)
+	        {
+		        this->data = data;
+		        this->next = NULL;
+	        }
+        };
+
+*****************************************************************/
+
+public class Solution {
+	static Node solve(Node head, int i, int b[]){
+		if(i==b.length)return head;
+		if(b[i]==0)return solve(head, i+1, b);
+		Node prev=null;
+		Node cur=head;
+		Node next=null;
+		while(cur!=null && b[i]-->0){
+			next=cur.next;
+			cur.next=prev;
+			prev=cur;
+			cur=next;
+		}
+		if(next!=null){
+			head.next=solve(next, i+1, b);
+		}
+		return prev;
+	}
+	public static Node getListAfterReverseOperation(Node head, int n, int b[]) {
+		// Write your code here.
+		return solve(head, 0, b);
+	}
+}

@@ -1,0 +1,54 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+class TrieNode{
+	TrieNode[] children;
+	boolean isEnd;
+	TrieNode(){
+		children=new TrieNode[26];
+		Arrays.fill(children, null);
+		isEnd=false;
+	}
+}
+
+public class Solution {
+	static TrieNode trie=new TrieNode();
+	static void add(String word){
+		TrieNode cur=trie;
+		for(char c:word.toCharArray()){
+			if(cur.children[c-97]==null){
+				cur.children[c-97]=new TrieNode();
+			}
+			cur=cur.children[c-97];
+		}
+		cur.isEnd=true;
+	}
+ 	static boolean search(String word){
+		
+
+	}
+	static void solve(String word, ArrayList<String> ans, StringBuilder str){
+		if(word.length()==0){
+			ans.add(str.toString());
+			return ;
+		}
+		for(int i=1;i<=word.length();i++){
+			if(search(word.substring(0, i))){
+				StringBuilder tmp=new StringBuilder(str);
+				tmp.append(word.substring(0, i)+" ");
+				solve(word.substring(i), ans, tmp);
+			}
+		}
+	}
+	public static ArrayList<String> wordBreak(String s, ArrayList<String> dictionary) {
+		// Write your code here.
+		trie=new TrieNode();
+		for(String i:dictionary){
+			add(i);
+		}
+		ArrayList<String> ans=new ArrayList<>();
+		solve(s, ans, new StringBuilder());
+		return ans;
+	}
+}
