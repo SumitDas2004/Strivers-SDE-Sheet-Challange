@@ -1,0 +1,34 @@
+public class Solution {
+	static boolean solve(int matrix[][]){
+		for(int i=0;i<9;i++){
+			for(int j=0;j<9;j++){
+				if(matrix[i][j]==0){
+					for(int e=1;e<=9;e++){
+						if(isValid(matrix, i, j, e)){
+							matrix[i][j]=e;
+							if(solve(matrix))return true;
+							else matrix[i][j]=0;
+						}
+					}
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	static boolean isValid(int matrix[][], int row, int col, int e){
+		for(int i=0;i<9;i++){
+			if(matrix[i][col]==e)return false;
+			if(matrix[row][i]==e)return false;
+			if(matrix[3*(row/3)+i/3][3*(col/3)+i%3]==e)return false;
+		}
+		return true;
+	}
+
+	public static boolean isItSudoku(int matrix[][]) {
+
+		// Write your code here.
+		return solve(matrix);
+
+	}
+}
