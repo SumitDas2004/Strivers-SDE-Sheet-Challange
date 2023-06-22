@@ -1,0 +1,48 @@
+import java.util.* ;
+import java.io.*; 
+class TrieNode{
+  TrieNode children[];
+  boolean isEnd;
+TrieNode(){
+  children=new TrieNode[26];
+  Arrays.fill(this.children, null);
+  this.isEnd=false;
+}
+}
+class cmp implements Comparator<String> {
+  public int compare(String a, String b){
+    return Integer.compare(a.length(), b.length());
+  }
+}
+class Solution {
+  static TrieNode trie=new TrieNode();
+  static void add(String word){
+    TrieNode cur=trie;
+    for(char c:word.toCharArray()){
+      if(cur.children[c-97]==null)cur.children[c-97]=new TrieNode();
+      cur=cur.children[c-97];
+    }
+    cur.isEnd=true;
+  }
+  static boolean search(String word){
+      TrieNode cur=trie;
+      for(char c:word.toCharArray()){
+        if(cur.children[c-97]==null)return false;
+        cur=cur.children[c-97];
+        if(!cur.isEnd)return false;
+      }
+      return true;
+  }
+  public static String completeString(int n, String[] a) {
+    // Write your code here.
+    trie=new TrieNode();
+    Arrays.sort(a, new cmp());
+    for(String i:a){
+      add(i);
+    }
+    for(int i=n-1;i>=0;i--){
+      if(search(a[i]))return a[i];
+    }
+    return "None";
+  }
+}

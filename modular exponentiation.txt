@@ -1,0 +1,17 @@
+import java.io.*;
+import java.util.* ;
+
+public class Solution {
+    static long solve(long x, long n, long m){
+        if(n==0)return 1;
+        if(n==1)return x;
+        long next=(solve(x, n/2, m)%m);
+        long sq=(next*next)%m;
+        if(n%2!=0)sq=(sq*x)%m;
+        return sq;  
+    }
+    public static int modularExponentiation(int x, int n, int m) {
+        // Write your code here.       
+        return (int)(solve(x, n, m)%m); 
+    }
+}
