@@ -1,0 +1,27 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static int romanToInt(String s) {
+        // Write your code here
+        HashMap<Character, Integer> map=new HashMap<>();
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
+        Stack<Character> st=new Stack<>();
+        for(char c:s.toCharArray()){
+            st.push(c);
+        }
+        int ans=0;
+        while(!st.isEmpty()){
+            char cur=st.pop();
+            int curval=map.get(cur);
+            while(!st.isEmpty() && map.get(st.peek())<curval)curval-=map.get(st.pop());
+            ans+=curval;
+        }
+        return ans;
+    }
+}

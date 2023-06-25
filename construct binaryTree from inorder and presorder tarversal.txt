@@ -1,0 +1,47 @@
+import java.util.* ;
+import java.io.*; 
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    class TreeNode<T>
+    {
+       public:
+        T data;
+        TreeNode<T> left;
+        TreeNode<T> right;
+
+        TreeNode(T data)
+        {
+            this.data = data;
+            left = null;
+            right = null;
+        }
+    };
+
+************************************************************/
+
+import java.util.ArrayList;
+
+public class Solution 
+{
+    static int findInPreorder(ArrayList<Integer>  inorder, int is, int ie, int tar){
+        for(int i=is;i<=ie;i++){
+            if(inorder.get(i)==tar)return i;
+        }
+        return -1;
+    }
+    static TreeNode<Integer> solve(ArrayList<Integer>  inorder, ArrayList<Integer>  preorder, int is, int ie, int ps, int pe){
+        if(is>ie || ps>pe)return null;
+        TreeNode<Integer> cur=new TreeNode<Integer>(preorder.get(ps));
+        int index=findInPreorder(inorder, is, ie, cur.data);
+        cur.left=solve(inorder, preorder, is, index-1, ps+1, ps+index-is);
+        cur.right=solve(inorder, preorder, index+1, ie, ps+index-is+1, pe);
+        return cur;
+    }
+    public static TreeNode<Integer> buildBinaryTree(ArrayList<Integer>  inorder, ArrayList<Integer>  preorder) 
+    {
+        //    Write your code here.
+        return solve(inorder, preorder, 0, inorder.size()-1, 0, preorder.size()-1);
+    }
+}

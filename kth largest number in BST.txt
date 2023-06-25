@@ -1,0 +1,39 @@
+import java.util.* ;
+import java.io.*; 
+/*************************************************************
+    Following is the Binary Search Tree node structure
+
+	class TreeNode<T> {
+	    public T data;
+	    public TreeNode<T> left;
+	    public TreeNode<T> right;
+
+	    TreeNode(T data) {
+	        this.data = data;
+	        left = null;
+	        right = null;
+	    }
+	}
+
+*************************************************************/
+
+import java.util.ArrayList;
+public class Solution {
+static int i=0;
+static int ans=0;
+static void solve(TreeNode<Integer> root, int k){
+	if(root==null)return ;
+	solve(root.right, k);
+	i++;
+	if(i==k)ans= root.data;
+	solve(root.left, k);
+}
+	public static int KthLargestNumber(TreeNode<Integer> root, int k) {
+		// Write your code here.
+		i=0;
+		ans=-1;
+		solve(root, k);
+		return ans;
+		
+	}
+}

@@ -1,0 +1,40 @@
+/************************************************************
+  
+   Following is the TreeNode class structure
+   
+   class TreeNode<T> { 
+        T data; 
+        TreeNode<T> left;
+        TreeNode<T> right;
+  
+        TreeNode(T data) { 
+            this.data = data; 
+            left = null; 
+            right = null; 
+        }
+   }
+    
+ ************************************************************/
+
+public class Solution {
+  static TreeNode<Integer> solve(int[] postOrder, int[] inOrder, int ps, int pe, int is, int ie){
+    if(ps>pe || is>ie)return null;
+    TreeNode<Integer> cur=new TreeNode<>(postOrder[pe]);
+    int index=0;
+    for(int i=is;i<=ie;i++)
+    {
+      if(inOrder[i]==cur.data){
+        index=i;
+        break;
+      }
+    }
+    int n=index-is;
+    cur.left=solve(postOrder, inOrder, ps, ps+n-1, is, index-1);
+    cur.right=solve(postOrder, inOrder, ps+n, pe-1, index+1, ie);
+    return cur;
+  }
+	public static TreeNode<Integer> getTreeFromPostorderAndInorder(int[] postOrder, int[] inOrder) {
+		// Write your code here.
+    return solve(postOrder, inOrder, 0, postOrder.length-1, 0, postOrder.length-1);
+	}
+}
