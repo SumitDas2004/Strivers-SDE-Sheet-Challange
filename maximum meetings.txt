@@ -1,0 +1,31 @@
+import java.util.* ;
+import java.io.*; 
+class pair implements Comparable<pair>{
+    int id;
+    int start;
+    int end;
+    pair(int a, int b, int c){
+        this.start=a;
+        this.end=b;
+        this.id=c;
+    }
+    public int compareTo(pair o){
+        return Integer.compare(this.end, o.end);
+    }
+}
+public class Solution {
+    public static List<Integer> maximumMeetings(int[] start, int[] end) {        
+        //Write your code here
+        List<Integer> list=new ArrayList<>();
+        pair arr[]=new pair[start.length];
+        for(int i=0;i<start.length;i++)arr[i]=new pair(start[i], end[i], i+1);
+        Arrays.sort(arr);
+        for(int i=0;i<start.length;){
+            int j=i+1;
+            while(j<start.length && arr[j].start<=arr[i].end)j++;
+            list.add(arr[i].id);
+            i=j;
+        }
+        return list;
+    }
+}

@@ -1,6 +1,6 @@
 public class Solution {
     static int isPossible(int n, int mid, int m){
-        int ans=1;
+        long ans=1;
         for(int i=1;i<=n;i++){
             ans*=mid;
             if(ans>m)return 2;

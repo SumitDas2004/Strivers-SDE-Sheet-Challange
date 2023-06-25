@@ -1,0 +1,26 @@
+import java.io.*;
+import java.util.* ;
+class cmp implements Comparator<int[]>{
+    public int compare(int[]a, int[] b){
+        if(a[0]==b[0])return Integer.compare(a[1], b[1]);
+        return Integer.compare(a[0], b[0]);
+    }
+}
+public class Solution{
+    public static List<int[]> pairSum(int[] arr, int s) {
+        // Write your code here.
+        List<int[]> list=new ArrayList<>();
+        HashMap<Integer, Integer> map=new HashMap<>();
+        for(int i:arr){
+            int rem=s-i;
+            if(map.containsKey(rem)){
+                for(int j=0;j<map.get(rem);j++){
+                    list.add(new int[]{Math.min(i, rem), Math.max(i, rem)});
+                }
+            }
+            map.put(i, map.getOrDefault(i, 0)+1);
+        }
+        Collections.sort(list, new cmp());
+        return list;
+    }
+}
