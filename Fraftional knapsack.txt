@@ -1,0 +1,44 @@
+import java.util.* ;
+import java.io.*; 
+/****************************************************************
+
+    Following is the class structure of the Pair class:
+
+        class Pair
+        {
+        	int weight;
+	        int value;
+	        Pair(int weight, int value)
+	        {
+		        this.weight = weight;
+		        this.value = value;
+	        }
+	        
+        }
+        
+*****************************************************************/
+
+class cmp implements Comparator<Pair>{
+	public int compare(Pair a, Pair b){
+		return Double.compare((double)b.value/b.weight, (double)a.value/a.weight);
+	}
+}
+public class Solution {
+    public static double maximumValue(Pair[] items, int n, int w) {
+            // Write your code here.
+    	    // ITEMS contains {weight, value} pairs.
+			Arrays.sort(items, new cmp());
+			boolean[] dp=new boolean[items.length];
+			double ans=0;
+			for(Pair i:items){
+				if(i.weight<=w){
+					ans+=i.value;
+					w-=i.weight;
+				}else if(w>0){
+					ans+=((double)w/(double)i.weight)*(double)i.value;
+					break;
+				}
+			}
+			return ans;
+    }
+}

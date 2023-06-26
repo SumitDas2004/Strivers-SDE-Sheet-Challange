@@ -1,0 +1,76 @@
+import java.util.*;
+
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    class TreeNode<T> 
+    {
+       public:
+        T data;
+        TreeNode<T> left;
+        TreeNode<T> right;
+
+        TreeNode(T data) 
+        {
+            this.data = data;
+            left = null;
+            right = null;
+        }
+    };
+
+************************************************************/
+
+
+public class Solution 
+{
+    public static String serializeTree(TreeNode<Integer> root)
+    {
+        
+        if(root==null)return "";
+        //    Write your code here for serialization of the tree.
+        StringBuilder s=new StringBuilder("");
+        Queue<TreeNode<Integer>> q=new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()){
+            TreeNode<Integer> cur=q.poll();
+            if(cur==null)s.append('#');
+            else s.append(cur.data);
+            s.append('$');
+            if(cur!=null){
+                q.add(cur.left);
+                q.add(cur.right);
+            }
+        }
+        return s.toString();
+    }
+    
+    public static TreeNode<Integer> deserializeTree(String str)
+    {
+        //    Write your code here for deserialization of the tree.
+        if(str.length()==0)return null;
+        String arr[]=str.split("\\$");
+        int i=0;
+        Queue<TreeNode<Integer>> q=new LinkedList<>();
+        TreeNode<Integer> root=new TreeNode<>(Integer.parseInt(arr[i++]));
+        q.add(root);
+        while(!q.isEmpty()){
+            TreeNode<Integer> cur=q.poll();
+            if(arr[i].equals("#")){
+                cur.left=null;
+                i++;
+            }else{
+                cur.left=new TreeNode<>(Integer.parseInt(arr[i++]));
+                q.add(cur.left);
+            }
+            if(arr[i].equals("#")){
+                cur.right=null;
+                i++;
+            }else{
+                cur.right=new TreeNode<>(Integer.parseInt(arr[i++]));
+                q.add(cur.right);
+            }
+        }
+        return root;
+    }
+}

@@ -1,0 +1,43 @@
+public class Solution {
+	static int[] calculate(String s) {
+		int left = 0;
+		int right = 0;
+		int k = 1;
+		int z[] = new int[s.length()];
+		while (k < s.length()) {
+			if (right < k) {
+				right = left = k;
+				while (right < s.length() && s.charAt(right) == s.charAt(right - left))
+					right++;
+				z[k] = right - left;
+				right--;
+			} else {
+				int k1 = k - left;
+				if (z[k1] < right - k + 1)
+					z[k] = z[k1];
+				else {
+					left=k;
+					while (right < s.length() && s.charAt(right) == s.charAt(right - left))
+						right++;
+					z[k] = right - left;
+					right--;
+				}
+			}
+			k++;
+		}
+		return z;
+	}
+
+	public static int zAlgorithm(String s, String p, int n, int m) {
+		// Write your code here
+		String newS = p + '$' + s;
+		int[] z = calculate(newS);
+		int cnt = 0;
+		for (int i : z) {
+			if(i==p.length())
+			cnt++;
+		}
+		return cnt;
+	}
+
+}

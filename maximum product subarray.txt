@@ -1,0 +1,25 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution {
+	static int solve(ArrayList<Integer> list, int i){
+		if(i==list.size())return Integer.MIN_VALUE;
+		int j=i+1;
+		int maxMul=Integer.MIN_VALUE;
+		int mul=list.get(i);
+		while(list.get(i)!=0 &&j<list.size() && list.get(j)!=0){
+			maxMul=Math.max(maxMul, mul);
+			mul*=list.get(j++);
+			maxMul=Math.max(maxMul, mul);
+		}
+		maxMul=Math.max(maxMul, mul);
+		int next=solve(list, i+1);
+		return Math.max(next, maxMul);
+	}
+	public static int maximumProduct(ArrayList<Integer> list, int n) {
+		// Write your code here.
+		if(list.size()==1)return list.get(0);
+		return solve(list, 0);
+	}
+}

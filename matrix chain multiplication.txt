@@ -1,0 +1,18 @@
+import java.util.* ;
+import java.io.*; 
+
+public class Solution {
+	public static int matrixMultiplication(int[] arr , int N) {
+		// Write your code here
+		int dp[][]=new int[N][N];
+		for(int len=2;len<N;len++){
+			for(int row=0, col=len;row<N && col<N; row++, col++){
+				dp[row][col]=Integer.MAX_VALUE;
+				for(int i=row+1;i<col;i++){
+					dp[row][col]=Math.min(dp[row][col], dp[row][i]+dp[i][col]+arr[row]*arr[col]*arr[i]);
+				}
+			}
+		}
+		return dp[0][N-1];
+	}
+}
