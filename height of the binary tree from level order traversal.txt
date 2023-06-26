@@ -1,0 +1,39 @@
+import java.util.* ;
+import java.io.*; 
+class tmp{
+	int left;
+	int right;
+	int height;
+	tmp(int a, int b, int c){
+		this.left=a;
+		this.right=b;
+		this.height=c;
+	}
+}
+public class Solution {
+	public static int heightOfTheTree(int[] inorder, int[] levelOrder, int N){
+		// Write your code here.
+		Queue<tmp> q= new LinkedList<>();
+		q.add(new tmp(0, N-1, 0));
+		HashMap<Integer, Integer> map=new HashMap<>();
+		for(int i=0;i<N;i++){
+			map.put(inorder[i], i);
+		}
+		int maxh=0;
+		for(int i=0;i<N;i++){
+			int cur=map.get(levelOrder[i]);
+			tmp t=q.poll();
+			int left=t.left;
+			int right=t.right;
+			int height=t.height;
+			maxh=Math.max(maxh, height);
+			if(cur>left){
+				q.add(new tmp(left, cur-1, height+1));
+			}
+			if(cur<right){
+				q.add(new tmp(cur+1, right, height+1));
+			}
+		}
+		return maxh;
+	}
+}
