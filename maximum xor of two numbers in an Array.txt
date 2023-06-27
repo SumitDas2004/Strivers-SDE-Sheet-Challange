@@ -1,0 +1,55 @@
+import java.util.* ;
+import java.io.*; 
+class TrieNode{
+    TrieNode arr[];
+    TrieNode(){
+        arr=new TrieNode[2];
+        Arrays.fill(arr, null);
+    }
+}
+public class Solution {
+    static TrieNode root=new TrieNode();
+    static void insert(int a){
+        TrieNode cur=root;
+        for(int i=31;i>=0;i--){
+            if(((1<<i)&a)==0){
+                if(cur.arr[0]==null)
+                    cur.arr[0]=new TrieNode();
+                cur=cur.arr[0];
+            }else{
+                if(cur.arr[1]==null)
+                    cur.arr[1]=new TrieNode();
+                cur=cur.arr[1];
+            }
+        }
+    }
+    static int find(int a){
+        int ans=0;
+        TrieNode cur=root;
+        for(int i=31;i>=0;i--){
+            if(((1<<i)&a)!=0){
+                if(cur.arr[0]!=null){
+                    ans+=(1<<i);
+                    cur=cur.arr[0];
+                }else cur=cur.arr[1];
+            }else{
+                if(cur.arr[1]!=null){
+                    ans+=(1<<i);
+                    cur=cur.arr[1];
+                }else cur=cur.arr[0];
+            }
+        }
+        return ans;
+    }
+    public static int maximumXor(int[] A) {
+        
+        // Write your Code here
+        root=new TrieNode();
+        for(int i:A)insert(i);
+        int max=0;
+        for(int i:A){
+            max=Math.max(max, find(i));
+        }
+        return max;
+    }
+}

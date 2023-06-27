@@ -1,0 +1,98 @@
+///JAVA code is getting runtime error due to internal bug in CN....the follwing java code ran in GFG but not in CN...
+//Hence I had to copy paste some other pereson's C++ solution
+//actually in case of java the internal error is nothing but the testcase
+//when I am passing testcase count in custom input it is not showing any error else for the defautl input the number of testcases is not specified in the input hence it is facing problem java code
+
+
+
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+	static boolean isPossible(ArrayList<ArrayList<Integer>> adj, int node, int curCol, int color[]){
+        for(int i:adj.get(node)){
+            if(color[i]==curCol)return false;
+        }
+        return true;
+    }
+    static boolean solve(ArrayList<ArrayList<Integer>> adj, int color[], int m, int node){
+        if(node==adj.size())return true;
+        for(int i=1;i<=m;i++){
+            if(isPossible(adj, node, i, color)){
+                color[node]=i;
+                if(solve(adj, color, m, node+1))return true;
+                color[node]=-1;
+            }
+        }
+        return false;
+    }
+	public static String graphColoring(int[][] mat, int m) {
+		// Write your code here
+		int n=mat.length;
+		ArrayList<ArrayList<Integer>> adj=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            adj.add(new ArrayList<>());
+        }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(mat[i][j]==1){
+                    adj.get(i).add(j);
+                    adj.get(j).add(i);
+                }
+            }
+        }
+        int color[]=new int[n];
+        Arrays.fill(color, -1);
+        return solve(adj, color, m, 0)?"YES":"NO";
+	}
+}
+
+
+CPP code
+#include <bits/stdc++.h> 
+
+bool isPossibleMthColor(vector<vector<int>>& mat, vector<int>& color_vector, int colored, int color, int n){
+    
+    for(int i=0; i<n; i++){
+        if(mat[colored][i] == 1){
+          if (color_vector[i] == color) {
+              return false;
+          }
+        }
+    }
+    
+     color_vector[colored] = color;
+    return true;
+}
+
+
+bool solve_graph(int colored, int n ,int m, vector<int> &color_vector, vector<vector<int>> &mat)
+{
+    if(colored == n){
+        return true;
+    }
+    
+    for(int i=1; i<=m; i++){
+        if(isPossibleMthColor(mat,color_vector,colored,i,n))
+        {
+          if (solve_graph( colored + 1, n, m,  color_vector, mat)) {
+              return true;
+          }
+          
+           color_vector[colored] = 0;
+        }
+    }
+
+    return false;
+}
+
+
+string graphColoring(vector<vector<int>> &mat, int m) {
+    // Write your code here
+    int n = mat.size();
+    vector<int>  color_vector(n,0);
+    
+    if(solve_graph(0,n,m, color_vector,mat)){
+        return "YES";
+    }
+    return "NO";
+}

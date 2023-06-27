@@ -1,0 +1,41 @@
+import java.util.*;
+public class Solution {
+    public static double median(int[] a, int[] b) {
+    	// Write your code here.
+        int i=a.length-1;
+        int j=0;
+        while(i>=0 && j<b.length){
+            if(a[i]>=b[j]){
+                int tmp=a[i];
+                a[i]=b[j];
+                b[j]=tmp;
+                i--;
+                j++;
+            }else break;
+        }
+        Arrays.sort(a);
+        Arrays.sort(b);
+        int totalLen=(a.length+b.length);
+        if(totalLen%2==1){
+            int mid=totalLen/2;
+            if(mid<a.length){
+                return a[mid];
+            }else{
+                mid=mid-a.length;
+                return b[mid];
+            }
+        }else{
+            int mid=totalLen/2;
+            if(mid<a.length){
+                return ((double)a[mid]+(double)a[mid-1])/2;
+            }else{
+                mid=mid-a.length;
+                if(mid==0){
+                    return ((double)a[a.length-1]+(double)b[mid])/2;
+                }else {
+                    return (((double)b[mid]+(double)b[mid-1])/2);
+                }
+            }
+        }
+    }
+}
