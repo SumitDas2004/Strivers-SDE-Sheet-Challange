@@ -1,0 +1,69 @@
+import java.util.HashMap;
+class Node{
+    int key;
+    int value;
+    Node prev;
+    Node next;
+    Node(int key, int value){
+        this.key=key;
+        this.value=value;
+        prev=null;
+        next=null;
+    }
+}
+public class LRUCache
+{
+    Node head;
+    Node tail;
+    int capacity;
+    HashMap<Integer, Node> map;
+    LRUCache(int capacity)
+    {
+        // Write your code here
+        head=new Node(0, 0);
+        tail=new Node(0, 0);
+        head.next=tail;
+        tail.prev=head;
+        this.capacity=capacity;
+        map=new HashMap<>();
+    }
+
+    public int get(int key)
+    {
+        // Write your code here
+        if(!map.containsKey(key))return -1;
+        Node node=map.get(key);
+        node.next.prev=node.prev;
+        node.prev.next=node.next;
+        Node next=head.next;
+        Node newNode=node;
+        head.next=newNode;
+        newNode.prev=head;
+        newNode.next=next;
+        next.prev=newNode;
+        return node.value;
+    }
+
+    public void put(int key, int value)
+    {
+        // Write your code here
+        if(map.containsKey(key)){
+            Node prevNode=map.get(key);
+            prevNode.next.prev=prevNode.prev;
+            prevNode.prev.next=prevNode.next;
+        }else if(capacity==map.size()){
+            int k=tail.prev.key;
+            map.remove(k);
+            tail.prev=tail.prev.prev;
+            tail.prev.next=tail;
+        }
+        Node next=head.next;
+        Node newNode=new Node(key, value);
+        head.next=newNode;
+        newNode.prev=head;
+        newNode.next=next;
+        next.prev=newNode;
+        map.put(key, newNode);
+    }
+} 
+ 

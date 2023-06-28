@@ -1,0 +1,37 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static int kruskalMST(int n, int m, ArrayList<ArrayList<Integer>> graph) {
+        // Write your code here.
+        ArrayList<ArrayList<int[]>> adj=new ArrayList<>();
+	    for(int i=0;i<n;i++)adj.add(new ArrayList<>());
+	    for(ArrayList<Integer> i:graph){
+	        adj.get(i.get(0)-1).add(new int[]{i.get(1)-1, i.get(2)});
+	        adj.get(i.get(1)-1).add(new int[]{i.get(0)-1, i.get(2)});
+	    }
+	    boolean visited[]=new boolean[n];
+	    int ans[]=new int[n];
+	    Arrays.fill(ans, Integer.MAX_VALUE);
+	    ans[0]=0;
+	    for(int v=0;v<n;v++){
+	        int minVer=-1;
+	        int minDis=Integer.MAX_VALUE;
+	        for(int i=0;i<n;i++){
+	            if(!visited[i] && ans[i]<minDis){
+	                minVer=i;
+	                minDis=ans[i];
+	            }
+	        }
+	        if(minVer==-1)break;
+	        visited[minVer]=true;
+	        for(int e[]:adj.get(minVer)){
+	            if(!visited[e[0]]){
+	                ans[e[0]]=Math.min(ans[e[0]], e[1]);
+	            }
+	        }
+	    }
+	        int res=0;
+	        for(int i:ans)res+=i;
+	        return res;
+    }
+}

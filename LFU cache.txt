@@ -1,0 +1,103 @@
+import java.util.* ;
+import java.io.*; 
+class Node{
+	int key;
+	int value;
+	Node next;
+	Node prev;
+	int freq=0;
+	Node(int key, int value, int freq){
+		this.key=key;
+		this.value=value;
+		next=null;
+		prev=null;
+		this.freq=freq;
+	}
+}
+class List{
+	Node head;
+	Node tail;
+	List(){
+		head=new Node(0, 0, 0);
+		tail=new Node(0, 0, 0);
+		head.next=tail;
+		tail.prev=head;
+	}
+	void add(Node newNode){
+		Node next=head.next;
+		head.next=newNode;
+		newNode.prev=head;
+		newNode.next=next;
+		next.prev=newNode;
+	}
+
+	void remove(Node tar){
+		tar.next.prev=tar.prev;
+		tar.prev.next=tar.next;
+	}
+	boolean isEmpty(){
+		return head.next==tail;
+	}
+}
+public class LFUCache {
+	int capacity;
+	int freq;
+	int size;
+	HashMap<Integer, Node> nodeMap;
+	HashMap<Integer, List> listMap;
+	LFUCache(int capacity) {
+		// Write your code here.
+		this.capacity=capacity;
+		freq=0;
+		size=0;
+		nodeMap=new HashMap<>();
+		listMap=new HashMap<>();
+	}
+
+	void updateNode(Node node){
+		int nodeFreq=node.freq;
+		List list=listMap.get(nodeFreq);
+		list.remove(node);
+		if(list.isEmpty() && nodeFreq==freq){
+			listMap.remove(freq);
+			freq++;
+		}
+		node.freq++;
+		List newList=listMap.getOrDefault(node.freq, new List());
+		newList.add(node);
+		listMap.put(node.freq, newList);
+	}
+
+	int get(int key) {
+		// Write your code here.
+		if(!nodeMap.containsKey(key))return -1;
+		Node cur=nodeMap.get(key);
+		updateNode(cur);
+		return cur.value;
+	}
+
+	void put(int key, int value) {
+		// Write your code here.
+		if(capacity==0)return ;
+		if(nodeMap.containsKey(key)){
+			Node curNode= nodeMap.get(key);
+			curNode.value=value;
+			updateNode(curNode);
+		}else{
+			if(capacity==size){
+				List minFreList=listMap.get(freq);
+				int minFreNode=minFreList.tail.prev.key;
+				nodeMap.remove(minFreNode);
+				minFreList.remove(minFreList.tail.prev);
+				size--;
+			}
+			size++;
+			freq=1;
+			Node newNode=new Node(key, value, 1);
+			List list =listMap.getOrDefault(1, new List());
+			list.add(newNode);
+			listMap.put(1, list);
+			nodeMap.put(key, newNode);
+		}
+	}
+}
